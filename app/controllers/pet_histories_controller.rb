@@ -1,10 +1,12 @@
 class PetHistoriesController < ApplicationController
   before_action :set_pet_history, only: [:show, :edit, :update, :destroy]
+  before_action :find_pet
+  before_action :find_cliente
 
   # GET /pet_histories
   # GET /pet_histories.json
   def index
-    @pet_histories = PetHistory.all
+    @pet_histories = @pet.pet_history
   end
 
   # GET /pet_histories/1
@@ -14,6 +16,7 @@ class PetHistoriesController < ApplicationController
 
   # GET /pet_histories/new
   def new
+    puts "AAAAAAAAA", @cliente
     @pet_history = PetHistory.new
   end
 
@@ -25,14 +28,13 @@ class PetHistoriesController < ApplicationController
   # POST /pet_histories.json
   def create
     @pet_history = PetHistory.new(pet_history_params)
+    @pet_history.pet_id = @pet.id
 
     respond_to do |format|
       if @pet_history.save
-        format.html { redirect_to @pet_history, notice: 'Pet history was successfully created.' }
-        format.json { render :show, status: :created, location: @pet_history }
+        format.html { redirect_to cliente_pet_pet_histories_path, notice: 'pet_history was successfully created.' }
       else
         format.html { render :new }
-        format.json { render json: @pet_history.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -42,7 +44,7 @@ class PetHistoriesController < ApplicationController
   def update
     respond_to do |format|
       if @pet_history.update(pet_history_params)
-        format.html { redirect_to @pet_history, notice: 'Pet history was successfully updated.' }
+        format.html { redirect_to cliente_pet_pet_histories_path, notice: 'Pet history was successfully updated.' }
         format.json { render :show, status: :ok, location: @pet_history }
       else
         format.html { render :edit }
@@ -56,7 +58,7 @@ class PetHistoriesController < ApplicationController
   def destroy
     @pet_history.destroy
     respond_to do |format|
-      format.html { redirect_to pet_histories_url, notice: 'Pet history was successfully destroyed.' }
+      format.html { redirect_to cliente_pet_pet_histories_path, notice: 'Pet history was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -70,5 +72,13 @@ class PetHistoriesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def pet_history_params
       params.require(:pet_history).permit(:weight, :heigth, :description)
+    end
+
+    def find_pet
+      @pet = Pet.find(params[:pet_id])
+    end
+
+    def find_cliente
+      @cliente = Cliente.find(params[:cliente_id])
     end
 end

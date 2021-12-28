@@ -4,6 +4,7 @@ class CreatePets < ActiveRecord::Migration[5.2]
       t.string :name
       t.string :race
       t.date :birthdate
+      t.belongs_to :cliente, foreign_key: true
 
       t.timestamps
     end

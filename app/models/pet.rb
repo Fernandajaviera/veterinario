@@ -1,23 +1,25 @@
 class Pet < ApplicationRecord
+  has_many :pet_history, inverse_of: :pet
+  accepts_nested_attributes_for :pet_history, allow_destroy: true
 
   def history_count
-    #TODO-implement
+    return PetHistory.count
   end
 
   def avg_weight
-    #TODO-implement
+    return PetHistory.average(:weight)
   end
 
   def avg_height
-    #TODO-implement
+    return PetHistory.average(:heigth)
   end
 
   def max_weight
-    #TODO-implement
+    return PetHistory.maximum(:weight)
   end
 
   def max_height
-    #TODO-implement
+    return PetHistory.maximum(:heigth)
   end
 
 end

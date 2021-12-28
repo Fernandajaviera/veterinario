@@ -15,7 +15,6 @@
   <%= @pet.birthdate %>
 </p>
 
-
 <table>
   <thead>
     <tr>
@@ -31,10 +30,10 @@
       <td><%= @pet.avg_weight %></td>
       <td><%= @pet.avg_height %></td>
       <td><%= @pet.max_weight %></td>
-      <td><%= @pet.max_height%></td>
+      <td><%= @pet.max_height %></td>
     </tr>
   </tbody>
 </table>
 
-<%= link_to 'Edit', edit_pet_path(@pet) %> |
-<%= link_to 'Back', pets_path %>
+<%= link_to 'Edit', edit_cliente_pet_path(@cliente, @pet) %> |
+<%= link_to 'Back', cliente_pets_path(@cliente) %>
